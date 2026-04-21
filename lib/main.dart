@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-
+import 'features/auth/screens/login_screen.dart';
 void main() {
   runApp(const DermAcademyApp());
 }
@@ -323,8 +323,11 @@ class WelcomeScreen extends StatelessWidget {
                                     child: InkWell(
                                       borderRadius: BorderRadius.circular(24),
                                       onTap: () {
-                                        // سينتقل لشاشة الكاميرا لاحقاً
-                                      },
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const LoginScreen()),
+  );
+},
                                       child: const Center(
                                         child: Text(
                                           'ابدأ الآن',
