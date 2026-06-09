@@ -34,7 +34,7 @@ define('OPENWEATHER_API_KEY', '');
 
 // --- 4) إعدادات عامة ---
 define('UPLOAD_DIR', __DIR__ . '/uploads/');   // مكان حفظ الصور على السيرفر
-define('UPLOAD_URL', '/skincare/backend/uploads/'); // المسار العام للوصول للصور عبر المتصفح
+define('UPLOAD_URL', '/backend/uploads/'); // المسار العام للوصول للصور عبر المتصفح (الباك إند منشور تحت /backend/)
 define('TOKEN_BYTES', 48);                      // طول توكن الجلسة
 
 // المنطقة الزمنية والترميز

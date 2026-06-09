@@ -4,6 +4,19 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- صلاحيات الكاميرا والمعرض والموقع -->
+	<key>NSCameraUsageDescription</key>
+	<string>نحتاج الكاميرا لالتقاط صورة بشرتك وتحليلها.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>نحتاج الوصول للمعرض لاختيار صورة بشرتك.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>نحتاج موقعك لجلب بيانات الطقس وتحسين دقة الاستشارة.</string>
+	<!-- السماح باتصال HTTP المحلي مع XAMPP أثناء التطوير -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
