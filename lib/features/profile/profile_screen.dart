@@ -128,6 +128,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
+                  OutlinedButton.icon(
+                    onPressed: () => Navigator.pushNamed(context, Routes.settings),
+                    icon: const Icon(Icons.dns_outlined),
+                    label: Text('إعدادات الخادم (IP)', style: GoogleFonts.notoSansArabic()),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.tertiary,
+                      minimumSize: const Size(double.infinity, 52),
+                      side: const BorderSide(color: AppColors.tertiary),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   FilledButton.icon(
                     onPressed: _logout,
                     icon: const Icon(Icons.logout),

@@ -53,7 +53,17 @@ class WelcomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
               child: Column(
                 children: [
-                  const SizedBox(height: 40),
+                  // زر الإعدادات (لضبط عنوان خادم XAMPP قبل تسجيل الدخول)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      tooltip: 'إعدادات الخادم',
+                      icon: const Icon(Icons.settings_outlined, color: primary),
+                      onPressed: () =>
+                          Navigator.pushNamed(context, Routes.settings),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   ClipOval(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),

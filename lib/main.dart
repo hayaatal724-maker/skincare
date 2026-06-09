@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/app_theme.dart';
+import 'core/settings_service.dart';
 import 'routes.dart';
 import 'services/auth_service.dart';
 import 'features/welcome/welcome_screen.dart';
 import 'features/home/home_screen.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // تحميل عنوان الخادم المحفوظ (IP جهاز XAMPP) قبل أي طلب.
+  await SettingsService.instance.load();
   runApp(const DermalyzeApp());
 }
 

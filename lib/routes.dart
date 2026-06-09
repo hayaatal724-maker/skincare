@@ -9,6 +9,7 @@ import 'features/analyze/camera_screen.dart';
 import 'features/analyze/result_screen.dart';
 import 'features/history/history_screen.dart';
 import 'features/profile/profile_screen.dart';
+import 'features/settings/settings_screen.dart';
 
 /// أسماء المسارات (Named Routes) في مكان واحد.
 class Routes {
@@ -20,6 +21,7 @@ class Routes {
   static const result = '/result';
   static const history = '/history';
   static const profile = '/profile';
+  static const settings = '/settings';
 
   /// مولّد المسارات — يتعامل مع المسارات التي تحتاج وسائط (arguments).
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -38,6 +40,8 @@ class Routes {
         return _page(const HistoryScreen(), settings);
       case profile:
         return _page(const ProfileScreen(), settings);
+      case Routes.settings:
+        return _page(const SettingsScreen(), settings);
       case result:
         final scan = settings.arguments as Scan;
         return _page(ResultScreen(scan: scan), settings);
