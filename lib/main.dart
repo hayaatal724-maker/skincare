@@ -1,32 +1,31 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'features/auth/screens/login_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 void main() {
-  runApp(const DermAcademyApp());
+  runApp(const DermalyzeApp());
 }
 
-class DermAcademyApp extends StatelessWidget {
-  const DermAcademyApp({super.key});
+class DermalyzeApp extends StatelessWidget {
+  const DermalyzeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'ديرم أكاديمي',
+      title: 'Dermalyze AI',
+      // دعم اللغة العربية والاتجاه من اليمين لليسار
+      locale: const Locale('ar', 'SA'),
+      builder: (context, child) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: child!,
+        );
+      },
       theme: ThemeData(
         useMaterial3: true,
-        // تحديد الألوان الأساسية بناءً على تصميم Tailwind
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFB02F56),
-          primary: const Color(0xFFB02F56),
-          secondary: const Color(0xFF76565C),
-          surface: const Color(0xFFFFF0F1), // surface-container-low
-        ),
+        textTheme: GoogleFonts.cairoTextTheme(),
       ),
-      // جعل اتجاه التطبيق من اليمين لليسار (RTL) لأن اللغة عربية
-      builder: (context, child) {
-        return Directionality(textDirection: TextDirection.rtl, child: child!);
-      },
       home: const WelcomeScreen(),
     );
   }
@@ -35,46 +34,40 @@ class DermAcademyApp extends StatelessWidget {
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
+  // الألوان المستخرجة من تصميمك
+  static const Color primary = Color(0xFF7C5360);
+  static const Color primaryContainer = Color(0xFFF2BDCD);
+  static const Color onPrimaryContainer = Color(0xFF724A57);
+  static const Color tertiaryContainer = Color(0xFFB6D3AF);
+  static const Color onTertiaryContainer = Color(0xFF435C3F);
+  static const Color onSurface = Color(0xFF1F1B1B);
+  static const Color onSurfaceVariant = Color(0xFF504447);
+
   @override
   Widget build(BuildContext context) {
-    // الألوان المستخدمة في التصميم
-    const Color primaryColor = Color(0xFFB02F56);
-    const Color secondaryColor = Color(0xFF76565C);
-    const Color backgroundColor = Color(0xFFFFF0F1);
-    const Color onSurfaceColor = Color(0xFF25191B);
-    const Color onSurfaceVariant = Color(0xFF544345);
-
     return Scaffold(
-      backgroundColor: backgroundColor,
       body: Stack(
         children: [
-          // 1. الخلفية التجريدية (Abstract Background Orbs)
-          Positioned(
-            top: -50,
-            right: -50,
-            child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
-              child: Container(
-                width: 300,
-                height: 300,
-                decoration: BoxDecoration(
-                  color: primaryColor.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-              ),
+          // 1. الخلفية (صورة + تأثيرات وتدرجات لونية)
+          Positioned.fill(
+            child: Image.network(
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuDi44GA79YSa24MdKnR5kXaTxOSbS9shB3-ndx6U1RxI7ALl4RctvHyH0YqCJlAzyNIOZj97c0g8VN4RT1AU5ApwQ83ujP2tpoljarPTYxPFniHQiVNYePvQoxfzQEW9Vi_liU8IZskm-WB2iWpbd1IUW6snlCsuz6VDQvX9EVyyPwwwoK1Q5_rs-1nAYb3s_6RsWkqkUM6fn0pgZR4a5NRtr1bZ7sUEx1avuUGxcH9pL0vhdz3j9dyBOIzTzvl_7bREDpMo66I0gs',
+              fit: BoxFit.cover,
+              color: Colors.white.withOpacity(0.4),
+              colorBlendMode: BlendMode.lighten,
             ),
           ),
-          Positioned(
-            bottom: 100,
-            left: -80,
-            child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-              child: Container(
-                width: 400,
-                height: 400,
-                decoration: BoxDecoration(
-                  color: secondaryColor.withOpacity(0.1),
-                  shape: BoxShape.circle,
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.white.withOpacity(0.95),
+                    const Color(0xFFFFF8F8).withOpacity(0.7),
+                    const Color(0xFFFFF8F8).withOpacity(0.3),
+                  ],
                 ),
               ),
             ),
@@ -82,348 +75,216 @@ class WelcomeScreen extends StatelessWidget {
 
           // 2. المحتوى الرئيسي
           SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight,
-                    ),
-                    child: IntrinsicHeight(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(height: 40),
-
-                          // --- الجزء العلوي: اللوجو والنصوص ---
-                          Column(
-                            children: [
-                              // اللوجو (Gradient Box)
-                              Container(
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(32),
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [primaryColor, secondaryColor],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: primaryColor.withOpacity(0.15),
-                                      blurRadius: 40,
-                                      offset: const Offset(0, 12),
-                                    ),
-                                  ],
-                                ),
-                                child: const Icon(
-                                  Icons
-                                      .medical_services_outlined, // استبدال أيقونة clinical_notes
-                                  color: Colors.white,
-                                  size: 36,
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-
-                              // النصوص
-                              Text(
-                                'مرحباً بك',
-                                style: TextStyle(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.w900,
-                                  color: primaryColor,
-                                  letterSpacing: -1,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                'رؤى سريرية احترافية لصحة بشرتك.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: onSurfaceVariant,
-                                  height: 1.5,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 40),
-
-                          // --- الجزء الأوسط: بطاقة الصورة (Hero Visualization) ---
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: ConstrainedBox(
-                              constraints: const BoxConstraints(maxWidth: 380),
-                              child: AspectRatio(
-                                aspectRatio: 4 / 5,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(40),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: primaryColor.withOpacity(0.08),
-                                        blurRadius: 64,
-                                        offset: const Offset(0, 32),
-                                      ),
-                                    ],
-                                    border: Border.all(
-                                      color: Colors.white.withOpacity(0.5),
-                                    ),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(40),
-                                    child: Stack(
-                                      fit: StackFit.expand,
-                                      children: [
-                                        // الصورة
-                                        Image.network(
-                                          'https://lh3.googleusercontent.com/aida-public/AB6AXuDC3zDtIWWE8yA1Cn7Hz_acGMYTeXW8L-J87YRaz6sXD5XwK-0KtZw2fgGmErHSTTUCNOg3Lx6aFlP2rmGXvgmJBcbEHIFCFG329I0zTY72BmPBVMytTcLEEVqbTAnINtWQbHZZ8sH2uNXqdG3YG58Of83JDgylAUPIPeraoVXImIDbU5f8ivX75eo8wWpwiSqG6kv6dxw1nnqJ_MILEXX1Z7xFKIpwyGoHwPRwebaqRfKnOTsbeGjPuG4euIATqGUINjasRrjv2Eo',
-                                          fit: BoxFit.cover,
-                                        ),
-
-                                        // التدرج اللوني فوق الصورة
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              begin: Alignment.bottomCenter,
-                                              end: Alignment.topCenter,
-                                              colors: [
-                                                primaryColor.withOpacity(0.3),
-                                                Colors.transparent,
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-
-                                        // تأثير الزجاج (Glassmorphism Card)
-                                        Positioned(
-                                          bottom: 24,
-                                          left: 24,
-                                          right: 24,
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              16,
-                                            ),
-                                            child: BackdropFilter(
-                                              filter: ImageFilter.blur(
-                                                sigmaX: 24,
-                                                sigmaY: 24,
-                                              ),
-                                              child: Container(
-                                                padding: const EdgeInsets.all(
-                                                  16,
-                                                ),
-                                                color: Colors.white.withOpacity(
-                                                  0.7,
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      width: 40,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                        color: const Color(
-                                                          0xFFFFD9DF,
-                                                        ), // secondary-container
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: const Icon(
-                                                        Icons.auto_awesome,
-                                                        color: Color(
-                                                          0xFF321118,
-                                                        ),
-                                                        size: 20,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(width: 16),
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Text(
-                                                            'تشخيص الذكاء الاصطناعي',
-                                                            style: TextStyle(
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: primaryColor
-                                                                  .withOpacity(
-                                                                    0.7,
-                                                                  ),
-                                                              letterSpacing:
-                                                                  1.5,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            'جاهز للتحليل',
-                                                            style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  onSurfaceColor,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 40),
-
-                          // --- الجزء السفلي: الأزرار والفوتر ---
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 24,
-                            ),
-                            child: Column(
-                              children: [
-                                // زر "ابدأ الآن"
-                                Container(
-                                  width: double.infinity,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(24),
-                                    gradient: const LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [primaryColor, secondaryColor],
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: primaryColor.withOpacity(0.12),
-                                        blurRadius: 24,
-                                        offset: const Offset(0, 8),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(24),
-                                      onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const LoginScreen()),
-  );
-},
-                                      child: const Center(
-                                        child: Text(
-                                          'ابدأ الآن',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-
-                                // زر تسجيل الدخول
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'هل لديك حساب؟',
-                                      style: TextStyle(
-                                        color: onSurfaceVariant,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        'تسجيل الدخول',
-                                        style: TextStyle(
-                                          color: primaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 24),
-
-                                // الفوتر (شارات الأمان والدقة)
-                                Opacity(
-                                  opacity: 0.4,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.verified_user_outlined,
-                                        size: 14,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      const Text(
-                                        'بيانات آمنة',
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Container(
-                                        width: 4,
-                                        height: 4,
-                                        decoration: const BoxDecoration(
-                                          color: Colors.grey,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      const Icon(
-                                        Icons.analytics_outlined,
-                                        size: 14,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      const Text(
-                                        'دقة سريرية',
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 40),
+                  
+                  // اللوجو (Spa Icon) الزجاجي
+                  ClipOval(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.5),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white.withOpacity(0.6)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryContainer.withOpacity(0.2),
+                              blurRadius: 32,
+                              offset: const Offset(0, 8),
+                            )
+                          ],
+                        ),
+                        child: const Icon(
+                          Icons.spa_rounded,
+                          color: primary,
+                          size: 32,
+                        ),
                       ),
                     ),
                   ),
-                );
-              },
+
+                  const Spacer(), // لدفع البطاقة إلى الأسفل
+
+                  // البطاقة الزجاجية السفلية (Glassmorphism Card)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(32),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(32),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(32),
+                          border: Border.all(color: Colors.white.withOpacity(0.7)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryContainer.withOpacity(0.15),
+                              blurRadius: 40,
+                              offset: const Offset(0, 4),
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // العنوان
+                            RichText(
+                              text: TextSpan(
+                                style: GoogleFonts.cairo(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.2,
+                                  color: onSurface,
+                                ),
+                                children: const [
+                                  TextSpan(text: 'عناية ذكية،\n'),
+                                  TextSpan(
+                                    text: 'تتكيف مع بيئتك.',
+                                    style: TextStyle(color: primary),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+
+                            // الوصف
+                            Text(
+                              'ندمج بين قوة الذكاء الاصطناعي في تحليل البشرة وبيانات المناخ والموقع الجغرافي لنقدم لكِ روتين عناية دقيق ومخصص لكِ تماماً.',
+                              style: GoogleFonts.cairo(
+                                fontSize: 16,
+                                height: 1.6,
+                                color: onSurfaceVariant,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+
+                            // الـ Chips (التحليل الذكي والمناخ)
+                            Row(
+                              children: [
+                                _buildChip(
+                                  icon: Icons.auto_awesome,
+                                  label: 'تحليل ذكي',
+                                  bgColor: tertiaryContainer.withOpacity(0.3),
+                                  borderColor: tertiaryContainer.withOpacity(0.5),
+                                  textColor: onTertiaryContainer,
+                                ),
+                                const SizedBox(width: 8),
+                                _buildChip(
+                                  icon: Icons.thermostat,
+                                  label: 'مزامنة المناخ',
+                                  bgColor: primaryContainer.withOpacity(0.3),
+                                  borderColor: primaryContainer.withOpacity(0.5),
+                                  textColor: onPrimaryContainer,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 32),
+
+                            // زر "ابدأ الرحلة"
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryContainer,
+                                foregroundColor: onPrimaryContainer,
+                                minimumSize: const Size(double.infinity, 56),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'ابدأ الرحلة',
+                                    style: GoogleFonts.cairo(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.arrow_back, size: 20),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+
+                            // زر "تسجيل الدخول"
+                            OutlinedButton(
+                              onPressed: () {},
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: onSurfaceVariant,
+                                side: const BorderSide(color: tertiaryContainer, width: 2),
+                                minimumSize: const Size(double.infinity, 56),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: Text(
+                                'تسجيل الدخول',
+                                style: GoogleFonts.cairo(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // ويدجت مساعدة لإنشاء الـ Chips
+  Widget _buildChip({
+    required IconData icon,
+    required String label,
+    required Color bgColor,
+    required Color borderColor,
+    required Color textColor,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(50),
+            border: Border.all(color: borderColor),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 18, color: textColor),
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: GoogleFonts.cairo(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
